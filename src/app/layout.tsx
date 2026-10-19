@@ -25,7 +25,7 @@ export default function RootLayout({
         <PlanProvider>
           <Toaster position="bottom-right" theme="dark" />
           <Navbar />
-          <main className="flex-grow">{children}</main>
+          <main className="grow">{children}</main>
           <Footer />
         </PlanProvider>
       </body>

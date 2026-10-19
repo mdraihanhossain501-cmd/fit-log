@@ -5,6 +5,7 @@ import { usePlan, Workout } from "@/context/PlanContext";
 import { toast } from "sonner";
 import Link from "next/link";
 import { ArrowLeft, Plus, Bookmark } from "lucide-react";
+import { notFound } from "next/navigation";
 
 export default function DetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -18,12 +19,21 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
         const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
         if (!res.ok) throw new Error("Primary detail API failed");
         const data = await res.json();
-        setWorkout(data);
+        if (!data || Object.keys(data).length === 0) {
+          setWorkout(null);
+        } else {
+          setWorkout(data);
+        }
       } catch (err) {
         try {
           const res = await fetch(`https://api.api-store.workers.dev/api/fitlog/${id}`);
+          if (!res.ok) throw new Error("Fallback detail API failed");
           const data = await res.json();
-          setWorkout(data);
+          if (!data || Object.keys(data).length === 0) {
+            setWorkout(null);
+          } else {
+            setWorkout(data);
+          }
         } catch {
           setWorkout(null);
         }
@@ -38,13 +48,9 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
     return <div className="text-center py-20 text-zinc-400">Loading workout details…</div>;
   }
 
+  // Trigger custom 404 page if no valid workout data exists
   if (!workout) {
-    return (
-      <div className="text-center py-20">
-        <h2 className="text-2xl font-bold uppercase font-display mb-4">Workout Not Found</h2>
-        <Link href="/" className="text-[#CCFF00] underline">Go back to Workouts</Link>
-      </div>
-    );
+    notFound();
   }
 
   const isPlanFull = planItems.length >= 5;
@@ -87,7 +93,7 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
 
           <h1 className="text-3xl md:text-5xl font-extrabold uppercase font-display mb-3">{workout.name}</h1>
           <p className="text-zinc-400 mb-6 leading-relaxed">
-            {workout.description || "A compound press that builds chest thickness, triceps, and pressing power from a stable bench."}
+            {workout.description || "A compound exercise designed to target and build target muscle groups efficiently."}
           </p>
 
           {/* Key Specs Panel */}

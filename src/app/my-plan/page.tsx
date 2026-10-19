@@ -104,7 +104,7 @@ export default function MyPlanPage() {
               }`}
             >
               <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="w-16 h-16 bg-zinc-800 rounded-xl overflow-hidden flex-shrink-0">
+                <div className="w-16 h-16 bg-zinc-800 rounded-xl overflow-hidden shrink-0">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
