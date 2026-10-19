@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️ FitLog — Workout Library & Gym Companion
 
-## Getting Started
+FitLog is a dark, no-nonsense gym companion application built with Next.js (App Router), Tailwind CSS, and TypeScript. It allows users to browse exercises, manage a daily workout plan with automated metric tracking, save lifts for later, and track exercise completions in real time.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Live Demo & Repository
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Live Site**:
+- **GitHub Repository**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Technologies Used
 
-## Learn More
+- **Framework**: Next.js 15 (App Router, Client & Server Components)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS (Custom Dark Theme, Electric Lime `#CCFF00` Accents)
+- **State Management**: React Context API (`PlanContext`) with `localStorage` persistence
+- **Icons**: Lucide React, Assets
+- **Notifications**: Sonner (Toast Notifications)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚡ Key Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Interactive Workout Library & Resilient API**:
+   - Displays 12 exercise lifts fetched dynamically from the primary Cloudflare Workers API with an automatic fallback mechanism.
+   - Cards match Figma specifications with rounded borders (`rounded-2xl`), electric lime category tags (`#CCFF00`), and an inner stats summary panel.
 
-## Deploy on Vercel
+2. **Dynamic Sorting (Challenge C1)**:
+   - Client-side sorting dropdown to organize exercises in real time by **Duration**, **Calories burned**, or **Rating**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Daily Plan Management with 5-Lift Cap**:
+   - Add lifts directly to "Today's Plan" with an enforced maximum limit of 5 exercises per day.
+   - Saves lifts to a "Saved for later" list.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Live Summary Metrics**:
+   - Real-time calculations for total planned exercises, combined duration (minutes), and cumulative calorie burn.
+
+5. **Interactive Logging & Removal (Challenge C3)**:
+   - Ability to check off finished exercises with "Mark as Done" (strike-through style) or remove exercises completely.
+   - Full state persistence across page reloads using browser `localStorage`.
+
+6. **Custom 404 & Empty States**:
+   - Dedicated 404 page for unmatched routes and friendly zero-state messages when no lifts are added to plans or saved lists.
+
+---
+
+## 💻 Local Development Setup
+
+To run this project locally, follow these steps:
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mdraihanhossain501-cmd/Assignment-6-B14.git
+   ```
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd Assignment-6-B14/fit-log
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+4. **Start the local development server**:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
