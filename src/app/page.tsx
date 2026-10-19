@@ -20,12 +20,12 @@ export default function Home() {
         setWorkouts(data);
       } catch (err) {
         try {
-          // Fallback API
+          // Primary API Fallback
           const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
           const data = await res.json();
           setWorkouts(data);
         } catch (fallbackErr) {
-          console.error("Both APIs failed", fallbackErr);
+          console.error("Both APIs failed to load", fallbackErr);
         }
       } finally {
         setLoading(false);
@@ -72,7 +72,7 @@ export default function Home() {
                 href={`/fitlog/${workout.id}`}
                 className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition flex flex-col justify-between"
               >
-                {/* Image Section */}
+                {/* Workout Card Header Image */}
                 <div className="relative h-48 w-full bg-zinc-800 overflow-hidden">
                   <img
                     src={workout.image}
@@ -81,10 +81,10 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Card Body */}
+                {/* Workout Details Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    {/* Category Tag Pills (#CCFF00 background) */}
+                    {/* Category Tag Pills */}
                     <div className="flex flex-wrap gap-2 mb-3">
                       {workout.category?.map((cat) => (
                         <span
@@ -96,7 +96,6 @@ export default function Home() {
                       ))}
                     </div>
 
-                    {/* Workout Title & Equipment */}
                     <h3 className="font-extrabold text-xl uppercase font-display text-white mb-1 tracking-wide">
                       {workout.name}
                     </h3>
@@ -105,7 +104,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  {/* Inner Stats Panel */}
+                  {/* Inner Stats Box */}
                   <div className="bg-zinc-950/60 border border-zinc-800/80 rounded-lg p-3 flex items-center justify-between text-xs text-zinc-300 font-medium">
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-zinc-400" />

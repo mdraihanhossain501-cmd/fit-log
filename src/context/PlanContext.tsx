@@ -31,7 +31,7 @@ export const PlanProvider = ({ children }: { children: React.ReactNode }) => {
   const [planItems, setPlanItems] = useState<Workout[]>([]);
   const [savedItems, setSavedItems] = useState<Workout[]>([]);
 
-  // Load from LocalStorage
+  // Load state from localStorage on mount
   useEffect(() => {
     const localPlan = localStorage.getItem("fitlog_plan");
     const localSaved = localStorage.getItem("fitlog_saved");
@@ -39,14 +39,14 @@ export const PlanProvider = ({ children }: { children: React.ReactNode }) => {
     if (localSaved) setSavedItems(JSON.parse(localSaved));
   }, []);
 
-  // Save to LocalStorage
+  // Sync state to localStorage
   useEffect(() => {
     localStorage.setItem("fitlog_plan", JSON.stringify(planItems));
     localStorage.setItem("fitlog_saved", JSON.stringify(savedItems));
   }, [planItems, savedItems]);
 
   const addToPlan = (item: Workout) => {
-    if (planItems.length >= 5) return false; // 5 lifts cap
+    if (planItems.length >= 5) return false; // 5 lifts cap constraint
     if (!planItems.some((i) => i.id === item.id)) {
       setPlanItems([...planItems, { ...item, isDone: false }]);
     }
