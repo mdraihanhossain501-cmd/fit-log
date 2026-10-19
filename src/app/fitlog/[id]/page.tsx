@@ -5,7 +5,6 @@ import { usePlan, Workout } from "@/context/PlanContext";
 import { toast } from "sonner";
 import Link from "next/link";
 import { ArrowLeft, Plus, Bookmark } from "lucide-react";
-import { notFound } from "next/navigation";
 
 export default function DetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -19,7 +18,8 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
         const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
         if (!res.ok) throw new Error("Primary detail API failed");
         const data = await res.json();
-        if (!data || Object.keys(data).length === 0) {
+        
+        if (!data || (!data.name && !data.id)) {
           setWorkout(null);
         } else {
           setWorkout(data);
@@ -29,7 +29,7 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
           const res = await fetch(`https://api.api-store.workers.dev/api/fitlog/${id}`);
           if (!res.ok) throw new Error("Fallback detail API failed");
           const data = await res.json();
-          if (!data || Object.keys(data).length === 0) {
+          if (!data || (!data.name && !data.id)) {
             setWorkout(null);
           } else {
             setWorkout(data);
@@ -48,9 +48,22 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
     return <div className="text-center py-20 text-zinc-400">Loading workout details…</div>;
   }
 
-  // Trigger custom 404 page if no valid workout data exists
   if (!workout) {
-    notFound();
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4">
+        <h1 className="text-8xl font-extrabold text-[#CCFF00] font-display mb-2">404</h1>
+        <h2 className="text-2xl font-bold uppercase font-display mb-4">WORKOUT NOT FOUND</h2>
+        <p className="text-zinc-400 mb-8 max-w-md">
+          The lift or route you are looking for does not exist or has been removed.
+        </p>
+        <Link
+          href="/"
+          className="bg-[#CCFF00] text-black font-extrabold uppercase px-6 py-3 rounded-lg hover:bg-[#b3e600] transition text-sm"
+        >
+          Return to Home
+        </Link>
+      </div>
+    );
   }
 
   const isPlanFull = planItems.length >= 5;
@@ -76,12 +89,10 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
       </Link>
 
       <div className="grid md:grid-cols-2 gap-10">
-        {/* Left Column — Visual Image */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden h-[400px] md:h-[500px]">
           <img src={workout.image} alt={workout.name} className="w-full h-full object-cover" />
         </div>
 
-        {/* Right Column — Info & Key Specs */}
         <div>
           <div className="flex gap-2 mb-3">
             {workout.category?.map((cat) => (
@@ -93,10 +104,9 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
 
           <h1 className="text-3xl md:text-5xl font-extrabold uppercase font-display mb-3">{workout.name}</h1>
           <p className="text-zinc-400 mb-6 leading-relaxed">
-            {workout.description || "A compound exercise designed to target and build target muscle groups efficiently."}
+            {workout.description || "A compound exercise designed to target and build muscle groups efficiently."}
           </p>
 
-          {/* Key Specs Panel */}
           <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 mb-6 text-sm grid grid-cols-2 gap-y-3 gap-x-4">
             <div><span className="text-zinc-500 uppercase block text-xs">Equipment</span> <strong className="text-white">{workout.equipment}</strong></div>
             <div><span className="text-zinc-500 uppercase block text-xs">Duration</span> <strong className="text-white">{workout.duration} min</strong></div>
@@ -104,7 +114,6 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
             <div><span className="text-zinc-500 uppercase block text-xs">Rating</span> <strong className="text-white">{workout.rating} / 5.0</strong></div>
           </div>
 
-          {/* Instructions */}
           <div className="mb-8">
             <h3 className="font-bold uppercase font-display mb-3 text-lg">Instructions</h3>
             <ol className="list-decimal list-inside space-y-2 text-zinc-300 text-sm">
@@ -115,7 +124,6 @@ export default function DetailPage({ params }: { params: Promise<{ id: string }>
             </ol>
           </div>
 
-          {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleAddPlan}

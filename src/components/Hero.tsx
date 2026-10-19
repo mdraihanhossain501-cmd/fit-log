@@ -19,8 +19,13 @@ export default function Hero() {
             BROWSE WORKOUTS
           </a>
         </div>
-        <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900 flex items-center justify-center">
-          <p className="text-zinc-600 font-bold uppercase tracking-wider">Hero Banner Image</p>
+
+        <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900">
+          <img
+            src="/assets/banner.png"
+            alt="FitLog Gym Hero Banner"
+            className="w-full h-full object-cover"
+          />
         </div>
       </div>
     </section>

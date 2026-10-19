@@ -20,7 +20,6 @@ export default function Home() {
         setWorkouts(data);
       } catch (err) {
         try {
-          // Primary API Fallback
           const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
           const data = await res.json();
           setWorkouts(data);
@@ -46,7 +45,6 @@ export default function Home() {
             <p className="text-zinc-400">Twelve lifts covering every major muscle group.</p>
           </div>
 
-          {/* Sort Dropdown */}
           <div className="relative inline-block text-left">
             <span className="text-xs text-zinc-500 uppercase block mb-1">Sort By</span>
             <select
@@ -72,7 +70,6 @@ export default function Home() {
                 href={`/fitlog/${workout.id}`}
                 className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition flex flex-col justify-between"
               >
-                {/* Workout Card Header Image */}
                 <div className="relative h-48 w-full bg-zinc-800 overflow-hidden">
                   <img
                     src={workout.image}
@@ -81,10 +78,8 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Workout Details Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    {/* Category Tag Pills */}
                     <div className="flex flex-wrap gap-2 mb-3">
                       {workout.category?.map((cat) => (
                         <span
@@ -104,7 +99,6 @@ export default function Home() {
                     </p>
                   </div>
 
-                  {/* Inner Stats Box */}
                   <div className="bg-zinc-950/60 border border-zinc-800/80 rounded-lg p-3 flex items-center justify-between text-xs text-zinc-300 font-medium">
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-zinc-400" />

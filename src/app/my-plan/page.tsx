@@ -33,7 +33,6 @@ export default function MyPlanPage() {
         <p className="text-zinc-400">Cap of five lifts for today. Finish them, then load more.</p>
       </div>
 
-      {/* Metrics Summary Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex items-center gap-4">
           <Dumbbell className="w-8 h-8 text-[#CCFF00]" />
@@ -58,7 +57,6 @@ export default function MyPlanPage() {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
       <div className="flex border-b border-zinc-800 mb-8">
         <button
           onClick={() => setActiveTab("plan")}
@@ -82,7 +80,6 @@ export default function MyPlanPage() {
         </button>
       </div>
 
-      {/* List / Empty State */}
       {currentList.length === 0 ? (
         <div className="text-center py-16 bg-zinc-950 border border-zinc-800 rounded-2xl">
           <h2 className="text-2xl font-bold uppercase font-display mb-2">NOTHING HERE YET</h2>
@@ -104,7 +101,7 @@ export default function MyPlanPage() {
               }`}
             >
               <div className="flex items-center gap-4 w-full md:w-auto">
-                <div className="w-16 h-16 bg-zinc-800 rounded-xl overflow-hidden shrink-0">
+                <div className="w-16 h-16 bg-zinc-800 rounded-xl overflow-hidden flex-shrink-0">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
@@ -119,7 +116,6 @@ export default function MyPlanPage() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center gap-2 w-full md:w-auto justify-end border-t md:border-t-0 border-zinc-800 pt-3 md:pt-0">
                 <Link
                   href={`/fitlog/${item.id}`}

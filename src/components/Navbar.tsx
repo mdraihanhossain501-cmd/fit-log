@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePlan } from "@/context/PlanContext";
-import { Dumbbell } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,13 +11,11 @@ export default function Navbar() {
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-wider uppercase font-display">
-          <Dumbbell className="h-6 w-6 text-[#CCFF00]" />
+          <img src="/assets/logo.png" alt="FitLog Logo" className="h-7 w-auto object-contain" />
           <span>FITLOG</span>
         </Link>
 
-        {/* Navigation Links */}
         <nav className="flex gap-6 font-medium text-sm">
           <Link
             href="/"
@@ -34,7 +31,6 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Dynamic Counter Badges */}
         <div className="flex items-center gap-3">
           <Link href="/my-plan" className="bg-[#CCFF00] text-black px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
             Plan ({planItems.length})
