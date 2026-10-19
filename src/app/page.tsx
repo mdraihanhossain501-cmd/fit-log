@@ -15,13 +15,18 @@ export default function Home() {
     async function fetchData() {
       try {
         const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+        if (!res.ok) throw new Error("Primary API failed");
         const data = await res.json();
         setWorkouts(data);
       } catch (err) {
-        // Fallback API
-        const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
-        const data = await res.json();
-        setWorkouts(data);
+        try {
+          // Fallback API
+          const res = await fetch("https://api.api-store.workers.dev/api/fitlog");
+          const data = await res.json();
+          setWorkouts(data);
+        } catch (fallbackErr) {
+          console.error("Both APIs failed", fallbackErr);
+        }
       } finally {
         setLoading(false);
       }
@@ -37,7 +42,7 @@ export default function Home() {
       <section id="library" className="max-w-7xl mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <h2 className="text-3xl font-extrabold uppercase font-display">THE LIBRARY</h2>
+            <h2 className="text-3xl font-extrabold uppercase font-display text-white">THE LIBRARY</h2>
             <p className="text-zinc-400">Twelve lifts covering every major muscle group.</p>
           </div>
 
@@ -46,8 +51,8 @@ export default function Home() {
             <span className="text-xs text-zinc-500 uppercase block mb-1">Sort By</span>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-zinc-900 border border-zinc-700 text-white py-2 px-4 pr-8 rounded appearance-none cursor-pointer focus:outline-none focus:border-[#ccff00]"
+              onChange={(e) => setSortBy(e.target.value as "duration" | "calories" | "rating")}
+              className="bg-zinc-900 border border-zinc-700 text-white py-2 px-4 pr-8 rounded appearance-none cursor-pointer focus:outline-none focus:border-[#CCFF00]"
             >
               <option value="duration">Duration</option>
               <option value="calories">Calories</option>
@@ -65,27 +70,56 @@ export default function Home() {
               <Link
                 key={workout.id}
                 href={`/fitlog/${workout.id}`}
-                className="bg-zinc-900 border border-zinc-800 rounded p-4 hover:border-zinc-700 transition flex flex-col justify-between"
+                className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-zinc-700 transition flex flex-col justify-between"
               >
-                <div>
-                  <div className="h-48 bg-zinc-800 rounded mb-4 overflow-hidden flex items-center justify-center">
-                    <img src={workout.image} alt={workout.name} className="object-cover w-full h-full" />
-                  </div>
-                  <div className="flex gap-2 mb-2">
-                    {workout.category?.map((cat) => (
-                      <span key={cat} className="text-[10px] bg-zinc-800 text-zinc-300 font-bold px-2 py-0.5 rounded uppercase">
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-                  <h3 className="font-bold text-lg uppercase font-display mb-1">{workout.name}</h3>
-                  <p className="text-zinc-400 text-sm mb-4">{workout.equipment}</p>
+                {/* Image Section */}
+                <div className="relative h-48 w-full bg-zinc-800 overflow-hidden">
+                  <img
+                    src={workout.image}
+                    alt={workout.name}
+                    className="w-full h-full object-cover rounded-t-2xl"
+                  />
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-zinc-400 border-t border-zinc-800 pt-3">
-                  <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {workout.duration} min</span>
-                  <span className="flex items-center gap-1"><Flame className="w-3.5 h-3.5" /> {workout.calories} kcal</span>
-                  <span className="flex items-center gap-1"><Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" /> {workout.rating}</span>
+                {/* Card Body */}
+                <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div>
+                    {/* Category Tag Pills (#CCFF00 background) */}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {workout.category?.map((cat) => (
+                        <span
+                          key={cat}
+                          className="text-[11px] bg-[#CCFF00] text-black font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider"
+                        >
+                          {cat}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Workout Title & Equipment */}
+                    <h3 className="font-extrabold text-xl uppercase font-display text-white mb-1 tracking-wide">
+                      {workout.name}
+                    </h3>
+                    <p className="text-zinc-400 text-sm mb-4 font-medium">
+                      {workout.equipment}
+                    </p>
+                  </div>
+
+                  {/* Inner Stats Panel */}
+                  <div className="bg-zinc-950/60 border border-zinc-800/80 rounded-lg p-3 flex items-center justify-between text-xs text-zinc-300 font-medium">
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-zinc-400" />
+                      {workout.duration} min
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Flame className="w-3.5 h-3.5 text-zinc-400" />
+                      {workout.calories} kcal
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Star className="w-3.5 h-3.5 text-zinc-400" />
+                      {workout.rating}
+                    </span>
+                  </div>
                 </div>
               </Link>
             ))}
