@@ -53,12 +53,12 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/mdraihanhossain501-cmd/Assignment-6-B14.git
+   git clone https://github.com/mdraihanhossain501-cmd/fit-log.git
    ```
 
 2. **Navigate to the project directory**:
    ```bash
-   cd Assignment-6-B14/fit-log
+   cd fit-log
    ```
 
 3. **Install dependencies**:
