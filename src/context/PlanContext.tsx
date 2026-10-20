@@ -15,7 +15,7 @@ export interface Workout {
   isDone?: boolean;
 }
 
-// Single Source of Truth for Calories
+
 export function getWorkoutCalories(workout: { name?: string; calories?: number | string }): number {
   if (workout.calories && Number(workout.calories) > 0) {
     return Number(workout.calories);
@@ -40,7 +40,7 @@ export function getWorkoutCalories(workout: { name?: string; calories?: number |
   return calorieMap[key] || 180;
 }
 
-// Single Source of Truth for Category Badges
+
 export function getWorkoutCategories(workout: { name?: string; category?: string[] }): string[] {
   if (workout.category && workout.category.length > 0) {
     return workout.category;

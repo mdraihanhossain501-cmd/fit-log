@@ -6,8 +6,8 @@ FitLog is a dark, no-nonsense gym companion application built with Next.js (App 
 
 ## 🚀 Live Demo & Repository
 
-- **Live Site**:
-- **GitHub Repository**:
+- **Live Site**: https://fit-log-utwe.vercel.app/
+- **GitHub Repository**: https://github.com/mdraihanhossain501-cmd/fit-log
 
 ---
 
