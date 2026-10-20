@@ -9,34 +9,51 @@ export default function Navbar() {
   const { planItems, savedItems } = usePlan();
 
   return (
-    <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-wider uppercase font-display">
-          <img src="/assets/logo.png" alt="FitLog Logo" className="h-7 w-auto object-contain" />
-          <span>FITLOG</span>
+    <header className="w-full bg-[#09090b] border-b border-zinc-800/80 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Left Brand Text (No Icon) */}
+        <Link href="/" className="font-extrabold text-lg uppercase tracking-wider font-display text-white">
+          FITLOG
         </Link>
 
-        <nav className="flex gap-6 font-medium text-sm">
+        {/* Center Nav Links */}
+        <nav className="flex items-center gap-2">
           <Link
             href="/"
-            className={pathname === "/" ? "text-[#CCFF00] underline underline-offset-8 font-bold" : "text-zinc-400 hover:text-white"}
+            className={`px-5 py-2 rounded-full text-xs font-bold transition ${
+              pathname === "/"
+                ? "bg-[#CCFF00]/15 text-[#CCFF00]"
+                : "text-zinc-400 hover:text-white"
+            }`}
           >
-            Workout
+            Workouts
           </Link>
           <Link
             href="/my-plan"
-            className={pathname === "/my-plan" ? "text-[#CCFF00] underline underline-offset-8 font-bold" : "text-zinc-400 hover:text-white"}
+            className={`px-5 py-2 rounded-full text-xs font-bold transition ${
+              pathname === "/my-plan"
+                ? "bg-[#CCFF00]/15 text-[#CCFF00]"
+                : "text-zinc-400 hover:text-white"
+            }`}
           >
             My Plan
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Link href="/my-plan" className="bg-[#CCFF00] text-black px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-            Plan ({planItems.length})
+        {/* Right Counter Badges */}
+        <div className="flex items-center gap-4 text-xs font-semibold text-zinc-300">
+          <Link href="/my-plan" className="flex items-center gap-2 hover:opacity-80 transition">
+            <span className="text-zinc-400">Plan</span>
+            <span className="bg-[#CCFF00] text-black w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">
+              {planItems.length}
+            </span>
           </Link>
-          <Link href="/my-plan" className="border border-zinc-700 text-white px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide hover:border-zinc-500">
-            Saved ({savedItems.length})
+
+          <Link href="/my-plan" className="flex items-center gap-2 hover:opacity-80 transition">
+            <span className="text-zinc-400">Saved</span>
+            <span className="bg-zinc-800 text-zinc-300 border border-zinc-700 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">
+              {savedItems.length}
+            </span>
           </Link>
         </div>
       </div>
